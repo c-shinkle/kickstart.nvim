@@ -204,6 +204,11 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- vim.o.expandtab = true -- expand tab input with spaces characters
+-- vim.o.smartindent = true -- syntax aware indentations for newline inserts
+-- vim.o.tabstop = 2 -- num of space characters per tab
+-- vim.o.shiftwidth = 2 -- spaces per indentation level
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -230,6 +235,80 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+
+  -- Javascript Debugger
+  -- 'mfussenegger/nvim-dap',
+  -- {
+  --   'mxsdev/nvim-dap-vscode-js',
+  --   dependencies = {
+  --     'mfussenegger/nvim-dap',
+  --   },
+  --   config = function()
+  --     require('dap-vscode-js').setup({
+  --       debugger_path = vim.fn.stdpath('data') .. '/lazy/vscode-js-debug',
+  --       adapters = { 'chrome', 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost', 'node', 'chrome' },
+  --     })
+
+  --     local dap = require('dap')
+  --     -- Set keymaps to control the debugger
+  --     vim.keymap.set('n', '<F5>', require 'dap'.continue)
+  --     vim.keymap.set('n', '<F10>', require 'dap'.step_over)
+  --     vim.keymap.set('n', '<F11>', require 'dap'.step_into)
+  --     vim.keymap.set('n', '<F12>', require 'dap'.step_out)
+  --     vim.keymap.set('n', '<leader>b', require 'dap'.toggle_breakpoint)
+  --     vim.keymap.set('n', '<leader>B', function()
+  --       require 'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))
+  --     end)
+
+  --     local js_based_languages = { 'typescript', 'javascript' }
+  --     for _, language in ipairs(js_based_languages) do
+  --       require('dap').configurations[language] = {
+  --         {
+  --           type = 'pwa-node',
+  --           request = 'launch',
+  --           name = 'Launch file',
+  --           program = '${file}',
+  --           cwd = '${workspaceFolder}',
+  --         }
+  --       }
+  --     end
+  --   end
+  -- },
+  -- {
+  --   'rcarriga/nvim-dap-ui',
+  --   dependencies = {
+  --     'mfussenegger/nvim-dap',
+  --     'nvim-neotest/nvim-nio',
+  --   },
+  --   config = function()
+  --     require('dapui').setup()
+
+  --     local dap, dapui = require('dap'), require('dapui')
+
+  --     dap.listeners.after.event_initialized['dapui_config'] = function()
+  --       dapui.open({})
+  --     end
+  --     dap.listeners.before.event_terminated['dapui_config'] = function()
+  --       dapui.close({})
+  --     end
+  --     dap.listeners.before.event_exited['dapui_config'] = function()
+  --       dapui.close({})
+  --     end
+
+  --     vim.keymap.set('n', '<leader>ui', require 'dapui'.toggle)
+  --   end
+  -- },
+
+  -- add this to your lua/plugins.lua, lua/plugins/init.lua,  or the file you keep your other plugins:
+  {
+    'numToStr/Comment.nvim',
+    opts = {
+        -- add any options here
+    },
+    config = function() 
+      require('Comment').setup()
+    end
+  },
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
