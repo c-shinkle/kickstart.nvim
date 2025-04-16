@@ -223,7 +223,8 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   if vim.v.shell_error ~= 0 then
     error('Error cloning lazy.nvim:\n' .. out)
   end
-end ---@diagnostic disable-next-line: undefined-field
+end
+---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 -- [[ Configure and install plugins ]]
@@ -468,6 +469,15 @@ require('lazy').setup({
     },
   },
   {
+    'numToStr/Comment.nvim',
+    opts = {
+      -- add any options here
+    },
+    config = function()
+      require('Comment').setup()
+    end
+  },
+  {
     -- Main LSP Configuration
     'neovim/nvim-lspconfig',
     dependencies = {
@@ -675,6 +685,8 @@ require('lazy').setup({
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         -- ts_ls = {},
         --
+
+        zls = {},
 
         lua_ls = {
           -- cmd = { ... },
