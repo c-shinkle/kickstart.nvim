@@ -100,9 +100,7 @@ vim.g.have_nerd_font = false
 
 -- Make line numbers default
 vim.opt.number = true
--- You can also add relative line numbers, to help with jumping.
---  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -167,6 +165,10 @@ vim.opt.confirm = true
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+-- Toggle between two windows (probably split vertically)
+-- from Claude 3.7
+vim.keymap.set('n', '<Space>w', '<C-w>w')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
@@ -475,7 +477,7 @@ require('lazy').setup({
     },
     config = function()
       require('Comment').setup()
-    end
+    end,
   },
   {
     -- Main LSP Configuration
@@ -627,6 +629,25 @@ require('lazy').setup({
           end
         end,
       })
+
+      -- vim.api.nvim_create_autocmd('BufWritePre',{
+      --   pattern = {"*.zig", "*.zon"},
+      --   callback = function(ev)
+      --     vim.lsp.buf.code_action({
+      --       context = { only = { "source.fixAll" } },
+      --       apply = true,
+      --     })
+      --   end
+      -- })
+      -- vim.api.nvim_create_autocmd('BufWritePre',{
+      --   pattern = {"*.zig", "*.zon"},
+      --   callback = function(ev)
+      --     vim.lsp.buf.code_action({
+      --       context = { only = { "source.organizeImports" } },
+      --       apply = true,
+      --     })
+      --   end
+      -- })
 
       -- Diagnostic Config
       -- See :help vim.diagnostic.Opts
@@ -879,31 +900,9 @@ require('lazy').setup({
       signature = { enabled = true },
     },
   },
-
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is.
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'folke/tokyonight.nvim',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
-    config = function()
-      ---@diagnostic disable-next-line: missing-fields
-      require('tokyonight').setup {
-        styles = {
-          comments = { italic = false }, -- Disable italics in comments
-        },
-      }
-
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
-    end,
-  },
-  { 
-    'ellisonleao/gruvbox.nvim', 
-    priority = 1000, 
+  {
+    'ellisonleao/gruvbox.nvim',
+    priority = 1000,
     config = function()
       ---@diagnostic disable-next-line: missing-fields
       require('gruvbox').setup {
@@ -911,12 +910,8 @@ require('lazy').setup({
           comments = { italic = false }, -- Disable italics in comments
         },
       }
-
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
       vim.cmd.colorscheme 'gruvbox'
-    end, 
+    end,
     -- opts = ...
   },
 
