@@ -708,6 +708,7 @@ require('lazy').setup({
         --
 
         zls = {},
+        fish_lsp = {},
 
         lua_ls = {
           -- cmd = { ... },
